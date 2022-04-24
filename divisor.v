@@ -2,13 +2,13 @@ module divisor (
     input [2:0] portA,portB,
     input clk,
     input init,
+    input rst,
     output reg [2:0] D,M,
     output reg done 
 );
 
 reg[2:0] status;
-reg [2:0] DV,DR,A;
-reg rst;
+reg [2:0] DV,DR,A = 3'b000;
 reg SH_DC;
 reg subs;
 reg [1:0] ct;
@@ -60,17 +60,14 @@ parameter START=0, SHIFT_DEC=1, NOTSUBS=2, SUBS=3, END=4;
 always @(posedge clk) begin
     case(status)
     START: begin
-        rst=0;
         SH_DC=0;
         subs=0;
         done=0;
         if(init) begin
-            rst = 1;
             status=SHIFT_DEC;
         end
     end
     SHIFT_DEC: begin
-        rst=0;
         SH_DC=1;
         subs=0;
         done=0;
@@ -78,7 +75,6 @@ always @(posedge clk) begin
         else   status=SUBS;
     end
     NOTSUBS: begin
-        rst=0;
         SH_DC=0;
         subs=0;
         done=0;
@@ -87,7 +83,6 @@ always @(posedge clk) begin
         else  status=SHIFT_DEC;
     end
     SUBS: begin
-        rst=0;
         SH_DC=0;
         subs=1;
         done=0;
@@ -96,7 +91,6 @@ always @(posedge clk) begin
         else  status=SHIFT_DEC;
     end
     END: begin
-        rst=0;
         SH_DC=0;
         subs=0;
         D = DV;
@@ -107,7 +101,5 @@ always @(posedge clk) begin
         status=START;
     endcase
 end
-
-
 
 endmodule

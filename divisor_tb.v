@@ -3,12 +3,12 @@
 
 module test;
 
-reg clk, init;
+reg clk, init, rst;
 reg [2:0] portA,portB;
 wire [2:0] D,M;
 wire done;
 
-divisor uut (.portA(portA),.portB(portB),.clk(clk),.init(init),.D(D),.M(M),.done(done));
+divisor uut (.portA(portA),.portB(portB),.clk(clk),.init(init),.rst(rst),.D(D),.M(M),.done(done));
 
 initial begin
 
@@ -19,8 +19,12 @@ initial begin
     portB = 2;
     clk=0;
     init=0;
+    rst=0;
 
-    #5 init=1;
+    #1 assign rst=1;
+    #2 assign rst=0;
+    #4 init=1;
+    #1 init = 0;
     #200 $finish;
 
 end
