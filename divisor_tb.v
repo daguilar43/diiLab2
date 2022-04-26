@@ -1,27 +1,26 @@
 `timescale 1ns / 1ps
-`include "divisor.v"
-
 module test;
 
 reg clk, init;
 reg [2:0] portA,portB;
-wire [2:0] D,M;
+reg START;
+wire [2:0] DV;
 wire done;
 
-divisor uut (.portA(portA),.portB(portB),.clk(clk),.init(init),.D(D),.M(M),.done(done));
+divisor uut (.portA(portA),.portB(portB),.clk(clk),.START(START),.DV(DV),.DONE(DOO));
 
 initial begin
 
     $dumpfile("divisor_tb.vcd");
     $dumpvars(0,test);
 
-    portA = 7;
-    portB = 2;
+    portA = 4;
+    portB = 4;
     clk=0;
-    init=0;
+    START=0;
 
-    #5 init=1;
-    #200 $finish;
+    #18 START=1;
+    #2000 $finish;
 
 end
 always #1 clk = ~clk;
