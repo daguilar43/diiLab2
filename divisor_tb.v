@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+`include "divisor.v"
 module test;
 
 reg clk, init;
@@ -14,8 +15,8 @@ initial begin
     $dumpfile("divisor_tb.vcd");
     $dumpvars(0,test);
 
-    portA = 4;
-    portB = 4;
+    portA = 7;
+    portB = 5;
     clk=0;
     START=0;
 
