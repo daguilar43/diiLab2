@@ -2,7 +2,9 @@ module ALUDISP(
     input [2:0] portA,portB,
     input [1:0] opcode,
     input clk, rst, 
-    output reg [6:0] SSeg
+    output reg [6:0] SSeg=7'b0000000,
+    output reg enable=1'b0
+
 );
 
 wire[15:0] salALU;
